@@ -1,0 +1,21 @@
+Requirements list:
+- player:
+	- has three lifes
+	- can drive left and right
+	- can use slow mode with bottom. That costs money. This regrets three seconds.
+	- can use faster mode with top bottom. That costs no money. This can stop with bottom mode.
+	- can collect money.
+
+- enemies:
+	- three different cars:
+		1. car that drives normal and is big (like a VW Golf or  VW Passat)
+		2. car that drives faster but is smaller (like a Smart)
+
+- money:
+	- the car can collect money. This is for the high score.
+
+- highscore:
+	- the used time
+	- the collected money
+
+- level up each minute.

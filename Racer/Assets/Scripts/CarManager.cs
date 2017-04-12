@@ -1,17 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Cars : MonoBehaviour
+public class CarManager : MonoBehaviour
 {
 
-    public GameObject Car;
+    public GameObject[] CarPool;
     public GameObject positionStreetStart;
     public GameObject positionStreetEnding;
     public GameObject positionStreetLeft;
     public GameObject positionStreetRight;
     public GameObject timer;
 
-    public float carsSpeed = 0.3f;
     float streetStart;
     float streetEnd;
     float streetLeft;
@@ -38,7 +37,7 @@ public class Cars : MonoBehaviour
         if (Cars.Length < timer.GetComponent<Timer>().GetCurrentMinute()+1)
         {
             Vector3 temp = new Vector3(Random.Range(streetLeft, streetRight), 1, streetEnd);
-            Instantiate(Car).gameObject.transform.position = temp;
+            Instantiate(CarPool[Random.Range(0,2)]).gameObject.transform.position = temp;
 
         }
         StartCoroutine(SpawnCars());
@@ -51,7 +50,7 @@ public class Cars : MonoBehaviour
 
         foreach (GameObject CarObject in Cars)
         {
-            Vector3 temp = new Vector3(0, 0, -carsSpeed);
+            Vector3 temp = new Vector3(0, 0, -CarObject.GetComponent<Car>().GetCarSpeed());
             CarObject.transform.position += temp;
 
             if (CarObject.transform.position.z <= streetStart)
