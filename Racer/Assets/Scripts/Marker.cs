@@ -10,7 +10,9 @@ public class Marker : MonoBehaviour {
 
     float streetStart;
     float streetEnd;
-    
+
+    float speed = 20f;
+
     // Use this for initialization
     void Start () {
 
@@ -28,7 +30,7 @@ public class Marker : MonoBehaviour {
         {
             foreach (GameObject streetMark in streetMarkers)
             {
-                Vector3 temp = new Vector3(0, 0, -0.1f);
+                Vector3 temp = new Vector3(0, 0, -speed*Time.deltaTime);
                 streetMark.transform.position += temp;
                 if(streetMark.transform.position.z <= streetStart)
                 {

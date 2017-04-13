@@ -28,8 +28,11 @@ public class Racer : MonoBehaviour {
     {
         if (collision.gameObject.tag == "Car")
         {
-
             SceneManager.LoadScene("StartScreen");
+        }
+        if (collision.gameObject.tag == "Money")
+        {
+            Destroy(collision.gameObject);
         }
     }
 
