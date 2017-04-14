@@ -6,18 +6,21 @@ using UnityEngine.SceneManagement;
 public class Racer : MonoBehaviour {
 
     public GameObject street;
+    private GameController gameController;
 
 	// Use this for initialization
 	void Start () {
-	
+        gameController = GameObject.Find("Game").GetComponent<GameController>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetKey(KeyCode.LeftArrow)) {
+        if (Input.GetKey(KeyCode.LeftArrow))
+        {
             Vector3 temp = new Vector3(-0.1f, 0, 0);
             this.transform.position += temp;
-        } else if(Input.GetKey(KeyCode.RightArrow))
+        }
+        else if (Input.GetKey(KeyCode.RightArrow))
         {
             Vector3 temp = new Vector3(0.1f, 0, 0);
             this.transform.position += temp;
@@ -33,6 +36,7 @@ public class Racer : MonoBehaviour {
         if (collision.gameObject.tag == "Money")
         {
             Destroy(collision.gameObject);
+            gameController.CountMoney();
         }
     }
 
