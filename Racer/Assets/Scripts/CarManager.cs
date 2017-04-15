@@ -15,14 +15,14 @@ public class CarManager : MonoBehaviour
     float streetEnd;
     float streetLeft;
     float streetRight;
-
-    Timer timerController;
+    
+    GameController gameController;
 
 
     // Use this for initialization
     void Start()
     {
-        timerController = GameObject.Find("Time").GetComponent<Timer>();
+        gameController = GameObject.Find("Game").GetComponent<GameController>();
         streetStart = positionStreetStart.transform.position.z;
         streetEnd = positionStreetEnding.transform.position.z;
 
@@ -38,12 +38,12 @@ public class CarManager : MonoBehaviour
         yield return new WaitForSeconds(Random.Range(2f, 5f));
         GameObject[] Cars = GameObject.FindGameObjectsWithTag("Car");
 
-        //if (Cars.Length < timerController.GetCurrentMinute()+1)
-        //{
-            Vector3 temp = new Vector3(Random.Range(streetLeft, streetRight), 1, streetEnd);
-            Instantiate(CarPool[Random.Range(0,2)]).gameObject.transform.position = temp;
-
-        //}
+        for(int i = 0; i < gameController.GetLevel(); i++)
+        {
+            Vector3 temp = new Vector3(Random.Range(streetLeft + 40, streetRight - 40), 1, streetEnd);
+            Instantiate(CarPool[Random.Range(0, 2)]).gameObject.transform.position = temp;
+        }
+           
         StartCoroutine(SpawnCars());
     }
 
@@ -63,11 +63,13 @@ public class CarManager : MonoBehaviour
     {
         yield return new WaitForSeconds(Random.Range(2f, 5f));
 
-        for(int i = 0; i <=10; i++)
+        float positionX = Random.Range(streetLeft + 10, streetRight - 10);
+
+        for (int i = 0; i <=10; i++)
         {
-            Instantiate(moneyObject, new Vector3(streetLeft + 10, 1, (streetEnd-5*i)), Quaternion.identity);
+            Instantiate(moneyObject, new Vector3(positionX, 1, (streetEnd-5*i)), Quaternion.identity);
         }
-       // StartCoroutine(SpawnMoney());
+        StartCoroutine(SpawnMoney());
     }
 
 }

@@ -7,6 +7,7 @@ public class Racer : MonoBehaviour {
 
     public GameObject street;
     private GameController gameController;
+    public float speed = 50f;
 
 	// Use this for initialization
 	void Start () {
@@ -17,12 +18,12 @@ public class Racer : MonoBehaviour {
 	void Update () {
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            Vector3 temp = new Vector3(-0.1f, 0, 0);
+            Vector3 temp = new Vector3(-speed*Time.deltaTime, 0, 0);
             this.transform.position += temp;
         }
         else if (Input.GetKey(KeyCode.RightArrow))
         {
-            Vector3 temp = new Vector3(0.1f, 0, 0);
+            Vector3 temp = new Vector3(speed*Time.deltaTime, 0, 0);
             this.transform.position += temp;
         }
     }

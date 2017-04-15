@@ -9,12 +9,13 @@ public class Timer : MonoBehaviour {
     private int currentMinute;
 
     public GameObject TimeText;
+    private GameController gameController;
+    private bool canLevelUp = false;
 
         
     // Use this for initialization
 	void Start () {
-
-      //  startTime = Time.time;
+        gameController = GameObject.Find("Game").GetComponent<GameController>();
     }
 	
 	// Update is called once per frame
@@ -36,6 +37,16 @@ public class Timer : MonoBehaviour {
         string timeText = String.Format("{0:00}:{1:00}:{2:00}", minutes, seconds, fraction);
 
         TimeText.gameObject.GetComponent<UnityEngine.UI.Text>().text = timeText;
+        if(seconds%20 == 0 )
+        {
+            if (canLevelUp) {
+                gameController.LevelUp();
+                canLevelUp = false;
+            }
+        } else
+        {
+            canLevelUp = true;
+        }
     }
 
     public int GetCurrentMinute()
