@@ -21,22 +21,31 @@ public class Timer : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         startTime += Time.deltaTime;
-
-
         UpdateTimeView();
     }
 
-    private void UpdateTimeView()
+    public String GetFormattedTime()
     {
         int intTime = (int)startTime;
         int minutes = intTime / 60;
         currentMinute = minutes;
         int seconds = intTime % 60;
         float fraction = startTime * 1000;
-        fraction = (fraction % 1000)/10;
-        string timeText = String.Format("{0:00}:{1:00}:{2:00}", minutes, seconds, fraction);
+        fraction = (fraction % 1000) / 10;
+        return String.Format("{0:00}:{1:00}:{2:00}", minutes, seconds, fraction);
+    }
 
-        TimeText.gameObject.GetComponent<UnityEngine.UI.Text>().text = timeText;
+    public int GetTime()
+    {
+        return (int)startTime;
+    }
+
+    private void UpdateTimeView()
+    {
+        int intTime = (int)startTime;
+        int seconds = intTime % 60;
+
+        TimeText.gameObject.GetComponent<UnityEngine.UI.Text>().text = GetFormattedTime();
         if(seconds%20 == 0 )
         {
             if (canLevelUp) {

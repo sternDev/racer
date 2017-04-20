@@ -3,35 +3,59 @@ using System.Collections;
 
 using UnityEngine.SceneManagement;
 
-public class Racer : MonoBehaviour {
+public class Racer : MonoBehaviour
+{
 
     public GameObject street;
     private GameController gameController;
-    public float speed = 50f;
+    public float speed = 200f;
+    private bool speedBoost = false;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start()
+    {
         gameController = GameObject.Find("Game").GetComponent<GameController>();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-        if (Input.GetKey(KeyCode.LeftArrow))
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        float currentSpeed = speed*Input.GetAxis("Horizontal");
+        if (speedBoost)
         {
-            Vector3 temp = new Vector3(-speed*Time.deltaTime, 0, 0);
+            currentSpeed *= 2;
+        }
+        Vector3 temp = new Vector3(currentSpeed * Time.deltaTime, 0, 0);
+        if(temp.x > -13 && temp.x < 13)
+        {
+
             this.transform.position += temp;
         }
-        else if (Input.GetKey(KeyCode.RightArrow))
+
+        if (Input.GetKey(KeyCode.Q))
         {
-            Vector3 temp = new Vector3(speed*Time.deltaTime, 0, 0);
-            this.transform.position += temp;
+            if (gameController.GetMoney() >= 30)
+            {
+                speedBoost = true;
+                gameController.MinimizeMoney(30);
+                StartCoroutine(StopBoost());
+            }
         }
     }
+
+    IEnumerator StopBoost()
+    {
+        yield return new WaitForSeconds(3);
+        speedBoost = false;
+    }
+
 
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.tag == "Car")
         {
+            gameController.AddHighscore();
+
             SceneManager.LoadScene("StartScreen");
         }
         if (collision.gameObject.tag == "Money")
@@ -40,17 +64,4 @@ public class Racer : MonoBehaviour {
             gameController.CountMoney();
         }
     }
-
-
-    /*  private bool CheckCollide()
-      {
-          Vector3 racerPosition = this.transform.position;
-          Vector3 streetPosition = street.transform.position;
-          //Vector3 streetPosition = street.transform.position;
-
-          if (racerPosition.x > streetPosition.x)
-          {
-
-          }
-      }*/
 }

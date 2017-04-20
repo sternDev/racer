@@ -40,12 +40,16 @@ public class Car : MonoBehaviour
                 // if (Vector3.Distance(gameObject.transform.position, carObject.transform.position) <= 50)
                 if (Mathf.Abs((gameObject.transform.position - carObject.transform.position).y) <= 0.1f)
                 {
-               //     test = 10 * Time.deltaTime;
+                  // test = 10 * Time.deltaTime;
                 }
             }
         }
         Vector3 temp = new Vector3(test, 0, -GetCarSpeed());
-        transform.position += temp;
+        if(temp.x > -13 && temp.x < 13)
+        {
+
+            transform.position += temp;
+        }
 
         if (transform.position.z <= streetStart)
         {
