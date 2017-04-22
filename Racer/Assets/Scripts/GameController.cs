@@ -10,7 +10,8 @@ public class GameController : MonoBehaviour {
     private Text moneyText;
     private Text levelText;
     private int level = 1;
-    
+
+    Highscore[] highscoreTable = new Highscore[10];
 
     private Timer timeController;
 
@@ -51,10 +52,23 @@ public class GameController : MonoBehaviour {
 
     public void AddHighscore()
     {
-        PlayerPrefs.SetString("test","Name: Jasmin, Level: "+GetLevel()+", Zeit: "+ timeController.GetFormattedTime());
-        PlayerPrefs.SetString("placeTime1", timeController.GetFormattedTime());
-        PlayerPrefs.SetInt("placePoints1", timeController.GetTime());
-        PlayerPrefs.SetString("placeName1", "Jasmin");
-        PlayerPrefs.SetInt("placeLevel1", GetLevel());
+        Highscore highscore = new Highscore();
+        highscore.SetPlayedTime(timeController.GetTime());
+        highscore.SetPlayerName("Mistekiste");
+        highscore.SetReachedLevel(GetLevel());
+        Highscore[] highscoreTest = Serializer.Load<Highscore[]>("test.json");
+
+        int i = 0;
+        foreach (Highscore hs in highscoreTest)
+        {
+            
+            if(hs == null)
+            {
+                highscoreTest[i] = highscore;
+            }
+            i++;
+        }
+
+        Serializer.Save<Highscore[]>("test.json", highscoreTest);
     }
 }
